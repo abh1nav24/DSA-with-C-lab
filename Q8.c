@@ -1,69 +1,37 @@
 #include <stdio.h>
 #include <string.h>
 
-#define MAX 1000
+#define MAX 100
 
-int main()
-{
-    int T;
-    scanf("%d", &T);
+int main() {
+    int top = -1;
+    char c[MAX];
+    char s[MAX];
 
-    for (int t = 0; t < T; t++)
-    {
-        char str[MAX];
-        char stack[MAX];
-        int top = -1;
-        int balanced = 1;
+    scanf("%s", c);
 
-        scanf("%s", str);
-
-        for (int i = 0; i < strlen(str); i++)
-        {
-            // Opening brackets
-            if (str[i] == '(' || str[i] == '{' || str[i] == '[')
-            {
-                top++;
-                stack[top] = str[i];
+    for (int i = 0; i < strlen(c); i++) {
+        if (c[i] == '(' || c[i] == '{' || c[i] == '[') {
+            s[++top] = c[i];
+        }
+        else if (c[i] == ')' || c[i] == '}' || c[i] == ']') {
+            if (top == -1) {
+                printf("Not Balanced");
+                return 0;
             }
 
-            // Closing brackets
-            else if (str[i] == ')' || str[i] == '}' || str[i] == ']')
-            {
-                if (top == -1)
-                {
-                    balanced = 0;
-                    break;
-                }
-
-                if ((str[i] == ')' && stack[top] == '(') ||
-                    (str[i] == '}' && stack[top] == '{') ||
-                    (str[i] == ']' && stack[top] == '['))
-                {
-                    top--;
-                }
-                else
-                {
-                    balanced = 0;
-                    break;
-                }
+            if ((c[i] == ')' && s[top] == '(') || (c[i] == '}' && s[top] == '{') ||(c[i] == ']' && s[top] == '[')) {
+                top--;
             }
-        }
-
-        // If brackets are still present
-        if (top != -1)
-        {
-            balanced = 0;
-        }
-
-        if (balanced == 1)
-        {
-            printf("Balanced\n");
-        }
-        else
-        {
-            printf("Unbalanced\n");
+            else {
+                printf("Not Balanced");
+                return 0;
+            }
         }
     }
-
+    if (top == -1)
+        printf("Balanced");
+    else
+        printf("Not Balanced");
     return 0;
 }
