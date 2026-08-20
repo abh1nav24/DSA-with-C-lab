@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 
 int main()
 {
@@ -31,7 +30,12 @@ int main()
                 {
                     if (arr[j] == b)
                     {
-                        int distance = abs(i - j);
+                        int distance;
+
+                        if (i > j)
+                            distance = i - j;
+                        else
+                            distance = j - i;
 
                         if (distance < min)
                         {
