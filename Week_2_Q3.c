@@ -7,6 +7,7 @@ int main()
 
     int a[n][n];
 
+    // Input matrix
     for (int i = 0; i < n; i++)
     {
         for (int j = 0; j < n; j++)
@@ -18,33 +19,33 @@ int main()
     // Save top-left element
     int temp = a[0][0];
 
-    // Move first column up
-    for (int i = 0; i < n - 1; i++)
-    {
-        a[i][0] = a[i + 1][0];
-    }
-
-    // Move bottom row left
+    // Move first row left
     for (int j = 0; j < n - 1; j++)
     {
-        a[n - 1][j] = a[n - 1][j + 1];
+        a[0][j] = a[0][j + 1];
     }
 
-    // Move last column down
-    for (int i = n - 1; i > 0; i--)
+    // Move last column up
+    for (int i = 0; i < n - 1; i++)
     {
-        a[i][n - 1] = a[i - 1][n - 1];
+        a[i][n - 1] = a[i + 1][n - 1];
     }
 
-    // Move top row right
-    for (int j = n - 1; j > 1; j--)
+    // Move bottom row right
+    for (int j = n - 1; j > 0; j--)
     {
-        a[0][j] = a[0][j - 1];
+        a[n - 1][j] = a[n - 1][j - 1];
     }
 
-    a[0][1] = temp;
+    // Move first column down
+    for (int i = n - 1; i > 1; i--)
+    {
+        a[i][0] = a[i - 1][0];
+    }
 
-    // Print matrix
+    a[1][0] = temp;
+
+    // Print rotated matrix
     for (int i = 0; i < n; i++)
     {
         for (int j = 0; j < n; j++)
