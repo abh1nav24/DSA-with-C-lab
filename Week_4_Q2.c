@@ -5,6 +5,7 @@
 int arr[MAX];
 int top1 = -1;
 int top2;
+int size;
 
 void push1(int value)
 {
@@ -41,7 +42,7 @@ void pop1()
 
 void pop2()
 {
-    if (top2 == MAX)
+    if (top2 == size)
     {
         printf("Stack 2 Underflow\n");
         return;
@@ -63,7 +64,7 @@ void display()
     printf("\n");
 
     printf("Stack 2: ");
-    for (i = MAX - 1; i >= top2; i--)
+    for (i = size - 1; i >= top2; i--)
     {
         printf("%d ", arr[i]);
     }
@@ -73,10 +74,16 @@ void display()
 
 int main()
 {
-    int size, choice, value;
+    int choice, value;
 
     printf("Enter size of stack: ");
     scanf("%d", &size);
+
+    if (size > MAX || size <= 0)
+    {
+        printf("Invalid size\n");
+        return 0;
+    }
 
     top2 = size;
 
