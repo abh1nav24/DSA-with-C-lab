@@ -1,37 +1,55 @@
 #include <stdio.h>
-#include <string.h>
 
-#define MAX 100
+int main()
+{
+    int T;
+    scanf("%d", &T);
 
-int main() {
-    int top = -1;
-    char c[MAX];
-    char s[MAX];
+    while (T--)
+    {
+        char str[1000];
+        scanf("%s", str);
 
-    scanf("%s", c);
+        int length = 0;
 
-    for (int i = 0; i < strlen(c); i++) {
-        if (c[i] == '(' || c[i] == '{' || c[i] == '[') {
-            s[++top] = c[i];
+        // Find length
+        while (str[length] != '\0')
+        {
+            length++;
         }
-        else if (c[i] == ')' || c[i] == '}' || c[i] == ']') {
-            if (top == -1) {
-                printf("Not Balanced");
-                return 0;
-            }
 
-            if ((c[i] == ')' && s[top] == '(') || (c[i] == '}' && s[top] == '{') ||(c[i] == ']' && s[top] == '[')) {
-                top--;
-            }
-            else {
-                printf("Not Balanced");
-                return 0;
+        int changed = 1;
+
+        while (changed == 1)
+        {
+            changed = 0;
+
+            for (int i = 0; i < length - 1; i++)
+            {
+                if ((str[i] == '(' && str[i + 1] == ')') ||
+                    (str[i] == '{' && str[i + 1] == '}') ||
+                    (str[i] == '[' && str[i + 1] == ']'))
+                {
+                    // Remove these two brackets
+                    for (int j = i; j < length - 2; j++)
+                    {
+                        str[j] = str[j + 2];
+                    }
+
+                    length = length - 2;
+                    str[length] = '\0';
+
+                    changed = 1;
+                    break;
+                }
             }
         }
+
+        if (length == 0)
+            printf("Balanced\n");
+        else
+            printf("Unbalanced\n");
     }
-    if (top == -1)
-        printf("Balanced");
-    else
-        printf("Not Balanced");
+
     return 0;
 }
