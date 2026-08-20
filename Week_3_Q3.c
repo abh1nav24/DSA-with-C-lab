@@ -1,33 +1,70 @@
 #include <stdio.h>
-#include <string.h>
 
-#define MAX 100
+int main()
+{
+    int T;
+    scanf("%d", &T);
 
-int main() {
-    int top = -1;
-    char c[MAX];
-    char s[MAX];
-    int count=0;
+    while (T--)
+    {
+        char str[1000];
 
-    scanf("%s", c);
+        scanf("%s", str);
 
-    for (int i = 0; i < strlen(c); i++) {
-        if (c[i] == '(') {
-            s[++top] = c[i];
+        int n = 0;
 
-        } 
-        else if (c[i] == ')' ) {
-            if (top == -1) {
-                continue;
+        // Find length of string
+        while (str[n] != '\0')
+        {
+            n++;
+        }
+
+        int max = 0;
+
+        // Starting position
+        for (int i = 0; i < n; i++)
+        {
+            // Ending position
+            for (int j = i; j < n; j++)
+            {
+                int count = 0;
+                int valid = 1;
+
+                // Check substring from i to j
+                for (int k = i; k <= j; k++)
+                {
+                    if (str[k] == '(')
+                    {
+                        count++;
+                    }
+                    else
+                    {
+                        count--;
+                    }
+
+                    // More closing brackets than opening
+                    if (count < 0)
+                    {
+                        valid = 0;
+                        break;
+                    }
+                }
+
+                // Valid substring
+                if (valid == 1 && count == 0)
+                {
+                    int length = j - i + 1;
+
+                    if (length > max)
+                    {
+                        max = length;
+                    }
+                }
             }
+        }
 
-            if (s[top]=='('){
-                top--;
-                count+=2;
-            }
-        }  
+        printf("%d\n", max);
     }
-    printf("%d", count);
-   
+
     return 0;
 }
