@@ -53,3 +53,13 @@ int main()
 
     return 0;
 }
+//Core Recursion Logic
+//void reverse()
+//{
+//    if (top == -1)
+//        return;
+//
+//    printf("%c", pop());
+//
+//    reverse();
+//}
