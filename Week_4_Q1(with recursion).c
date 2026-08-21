@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <string.h>
 
 #define MAX 1000
 
@@ -16,6 +15,16 @@ char pop()
     return stack[top--];
 }
 
+void reverse()
+{
+    if (top == -1)
+        return;
+
+    printf("%c", pop());
+
+    reverse();
+}
+
 int main()
 {
     int T;
@@ -29,17 +38,15 @@ int main()
 
         top = -1;
 
-        // Push characters into stack
-        for (int i = 0; str[i] != '\0'; i++)
+        int i = 0;
+
+        while (str[i] != '\0')
         {
             push(str[i]);
+            i++;
         }
 
-        // Pop characters to reverse the string
-        while (top != -1)
-        {
-            printf("%c", pop());
-        }
+        reverse();
 
         printf("\n");
     }
