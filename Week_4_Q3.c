@@ -1,89 +1,74 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 
 #define MAX 100
 
 int stack[MAX];
-int Top = -1;
+int top = -1;
 
-void push(int value)
-{
-    stack[++Top] = value;
+void push(int x) {
+    stack[++top] = x;
 }
 
-int pop()
-{
-    return stack[Top--];
+int pop() {
+    return stack[top--];
 }
 
-void evaluate(char exp[], int i)
-{
-    int a, b, r;
-
-    // End of string
-    if (exp[i] == '\0')
-    {
-        printf("Result %d\n", pop());
-        return;
-    }
-
-    // Ignore spaces
-    if (exp[i] == ' ')
-    {
-        evaluate(exp, i + 1);
-        return;
-    }
-
-    // If digit
-    if (isdigit(exp[i]))
-    {
-        push(exp[i] - '0');
-        evaluate(exp, i + 1);
-        return;
-    }
-
-    // Operator
-    b = pop();
-    a = pop();
-
-    switch (exp[i])
-    {
-        case '+':
-            r = a + b;
-            break;
-
-        case '-':
-            r = a - b;
-            break;
-
-        case '*':
-            r = a * b;
-            break;
-
-        case '/':
-            r = a / b;
-            break;
-    }
-
-    push(r);
-    evaluate(exp, i + 1);
-}
-
-int main()
-{
+int main() {
     int T;
-    char exp[MAX];
-
     scanf("%d", &T);
+    getchar();
 
-    while (T--)
-    {
-        Top = -1;
+    while (T--) {
+        char expression[500];
+        fgets(expression, sizeof(expression), stdin);
 
-        scanf(" %[^\n]", exp);
+        top = -1;
 
-        evaluate(exp, 0);
+        char *token = strtok(expression, " \n");
+
+        while (token != NULL) {
+
+            // If token is a number
+            if (isdigit(token[0]) ||
+                (token[0] == '-' && isdigit(token[1]))) {
+
+                push(atoi(token));
+            }
+
+            // If token is an operator
+            else {
+                int b = pop();
+                int a = pop();
+                int result;
+
+                switch (token[0]) {
+                    case '+':
+                        result = a + b;
+                        break;
+
+                    case '-':
+                        result = a - b;
+                        break;
+
+                    case '*':
+                        result = a * b;
+                        break;
+
+                    case '/':
+                        result = a / b;
+                        break;
+                }
+
+                push(result);
+            }
+
+            token = strtok(NULL, " \n");
+        }
+
+        printf("%d\n", pop());
     }
 
     return 0;
